@@ -335,6 +335,117 @@
 
     /* spacing helper */
     .mt { margin-top: 18px; }
+  /* ════════════════════════════
+       MOBIILIOPTIMOINT (max 650px)
+    ════════════════════════════ */
+    @media (max-width: 650px) {
+
+      /* ── Header ── */
+      header {
+        padding: 14px 16px 12px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .logo-wrap {
+        width: 48px;
+        height: 48px;
+      }
+      .logo-wrap img {
+        width: 42px;
+        height: 42px;
+      }
+      header h1 {
+        font-size: 17px;
+        letter-spacing: -0.3px;
+      }
+      header p {
+        font-size: 11px;
+        margin-top: 2px;
+      }
+      .season-badge {
+        font-size: 11px;
+        padding: 5px 11px;
+        margin-left: auto;
+      }
+      #last-updated { display: none; }
+
+      /* ── Layout ── */
+      main {
+        padding: 20px 10px 48px;
+      }
+
+      /* ── Division header ── */
+      .division-header {
+        margin: 28px 0 12px;
+        gap: 8px;
+      }
+      .division-title { font-size: 15px; }
+      .division-pill { font-size: 10px; padding: 4px 10px; }
+
+      /* ── Team card ── */
+      .team-card { border-radius: 10px; margin-bottom: 14px; }
+      .team-header { padding: 10px 14px; gap: 10px; }
+      .team-name { font-size: 14px; }
+      .team-meta { display: none; }
+      .match-count { font-size: 11px; padding: 2px 8px; }
+
+      /* ── Round group ── */
+      .round-group { padding: 12px 10px 6px; }
+      .round-label { font-size: 10px; margin-bottom: 10px; }
+      .date-group { margin-bottom: 12px; }
+
+      /* ── Date & venue ── */
+      .date-venue-row { gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+      .date-badge { font-size: 11px; padding: 4px 9px; }
+      .venue-tag { font-size: 10.5px; }
+
+      /* ── Match table ── */
+      .match-table {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .match-table td {
+        padding: 8px 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .col-time {
+        width: 44px;
+        font-size: 13px;
+        font-weight: 700;
+        padding-left: 6px !important;
+      }
+      .col-time.taso2 {
+        font-size: 13px;
+      }
+      .col-home {
+        font-size: 12px;
+        text-align: right;
+        width: 32%;
+      }
+      .col-vs {
+        width: 18px;
+        font-size: 11px;
+        padding: 0 2px;
+        text-align: center;
+      }
+      .col-away {
+        font-size: 12px;
+        width: 32%;
+      }
+      .col-score {
+        width: 46px;
+        font-size: 13px;
+        padding-right: 6px !important;
+      }
+      .ilves {
+        font-size: 12px;
+      }
+
+      /* ── Footer ── */
+      footer { padding: 18px 16px; font-size: 11px; }
+    }
   </style>
 </head>
 <body>
