@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Keltainen A – Piirisarjat 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260420T173000
+DTEND;TZID=Europe/Helsinki:20260420T191000
+SUMMARY:Ilves Keltainen A: TPV/Punainen, Akaa YJ +1
+LOCATION:Ahvenisjärvi 2 TN A1, Tampere
+DESCRIPTION:17:30 Ilves Keltainen A - TPV/Punainen\n18:05 Akaa YJ - Ilves Keltainen A\n18:45 Ilves Keltainen A - Ilves/Keltavihreä A
+UID:20260420-Ilves_Keltainen_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260506T181500
+DTEND;TZID=Europe/Helsinki:20260506T194000
+SUMMARY:Ilves Keltainen A: HJS/sinivalkoinen, Ilves/Keltavihreä B +1
+LOCATION:Hakkari TN A2, Lempäälä
+DESCRIPTION:18:15 Ilves Keltainen A - HJS/sinivalkoinen\n18:45 Ilves Keltainen A - Ilves/Keltavihreä B\n19:15 LeKi-futis/sininen - Ilves Keltainen A
+UID:20260506-Ilves_Keltainen_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260518T173000
+DTEND;TZID=Europe/Helsinki:20260518T191000
+SUMMARY:Ilves Keltainen A: FC Haka j./Valkoinen, Tampere United +1
+LOCATION:Ahvenisjärvi 2 TN A2, Tampere
+DESCRIPTION:17:30 Ilves Keltainen A - FC Haka j./Valkoinen\n18:05 Ilves Keltainen A - Tampere United\n18:45 Ilves/P2018/A - Ilves Keltainen A
+UID:20260518-Ilves_Keltainen_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260601T173000
+DTEND;TZID=Europe/Helsinki:20260601T191000
+SUMMARY:Ilves Keltainen A: HJS/Valkosininen, Ylöjärven Ilves +1
+LOCATION:Ahvenisjärvi 1 TN A2, Tampere
+DESCRIPTION:17:30 Ilves Keltainen A - HJS/Valkosininen\n18:05 Ilves Keltainen A - Ylöjärven Ilves\n18:45 Ilves/P2018/B - Ilves Keltainen A
+UID:20260601-Ilves_Keltainen_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260615T173000
+DTEND;TZID=Europe/Helsinki:20260615T190500
+SUMMARY:Ilves Keltainen A: NoPS, Ilves-Kissat jr Valkoinen +1
+LOCATION:Suorama N A2, Kangasala
+DESCRIPTION:17:30 Ilves Keltainen A - NoPS\n18:05 Ilves Keltainen A - Ilves-Kissat jr Valkoinen\n18:40 FC Kangasala - Ilves Keltainen A
+UID:20260615-Ilves_Keltainen_A@ilves-p2017
+END:VEVENT
+END:VCALENDAR
