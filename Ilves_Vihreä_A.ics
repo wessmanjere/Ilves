@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Vihreä A – Piirisarjat 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260423T173000
+DTEND;TZID=Europe/Helsinki:20260423T191000
+SUMMARY:Ilves Vihreä A: NoPS, Ilves/P2018/B +1
+LOCATION:Pulleri TN 2 A2, Hämeenlinna
+DESCRIPTION:17:30 Ilves Vihreä A - NoPS\n18:05 Ilves Vihreä A - Ilves/P2018/B\n18:45 HJS/sinivalkoinen - Ilves Vihreä A
+UID:20260423-Ilves_Vihreä_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260504T173000
+DTEND;TZID=Europe/Helsinki:20260504T191000
+SUMMARY:Ilves Vihreä A: TPV/Punainen, FC Haka j./Valkoinen +1
+LOCATION:Ylöjärven Ilves Areena TN A, Ylöjärvi
+DESCRIPTION:17:30 Ilves Vihreä A - TPV/Punainen\n18:05 FC Haka j./Valkoinen - Ilves Vihreä A\n18:45 Ilves Vihreä A - Ilves-Kissat jr Valkoinen
+UID:20260504-Ilves_Vihreä_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260518T173000
+DTEND;TZID=Europe/Helsinki:20260518T191000
+SUMMARY:Ilves Vihreä A: LeKi-futis/sininen, Ilves/Keltavihreä A +1
+LOCATION:Ahvenisjärvi 2 TN A2, Tampere
+DESCRIPTION:17:30 Ilves Vihreä A - LeKi-futis/sininen\n18:05 Ilves Vihreä A - Ilves/Keltavihreä A\n18:45 HJS/Valkosininen - Ilves Vihreä A
+UID:20260518-Ilves_Vihreä_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260601T173000
+DTEND;TZID=Europe/Helsinki:20260601T191000
+SUMMARY:Ilves Vihreä A: FC Kangasala, Tampere United +1
+LOCATION:Ahvenisjärvi 1 TN A2, Tampere
+DESCRIPTION:17:30 Ilves Vihreä A - FC Kangasala\n18:05 Ilves Vihreä A - Tampere United\n18:45 Ilves/Keltavihreä B - Ilves Vihreä A
+UID:20260601-Ilves_Vihreä_A@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260615T173000
+DTEND;TZID=Europe/Helsinki:20260615T191500
+SUMMARY:Ilves Vihreä A: Akaa YJ, Ilves/P2018/A +1
+LOCATION:Suorama N A2, Kangasala
+DESCRIPTION:17:30 Ilves Vihreä A - Akaa YJ\n18:05 Ilves Vihreä A - Ilves/P2018/A\n18:50 Ylöjärven Ilves - Ilves Vihreä A
+UID:20260615-Ilves_Vihreä_A@ilves-p2017
+END:VEVENT
+END:VCALENDAR
