@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Vihreä B – Piirisarjat 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260502T135000
+DTEND;TZID=Europe/Helsinki:20260502T150500
+SUMMARY:Ilves Vihreä B: Ylöjärven Ilves/punainen, FC Vapsi/Sininen
+LOCATION:Hoppu TN, Vammala
+DESCRIPTION:13:50 Ylöjärven Ilves/punainen - Ilves Vihreä B\n14:40 Ilves Vihreä B - FC Vapsi/Sininen
+UID:20260502-Ilves_Vihreä_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260511T173000
+DTEND;TZID=Europe/Helsinki:20260511T191000
+SUMMARY:Ilves Vihreä B: NoPS Musta, Apassit +1
+LOCATION:Ahvenisjärvi 1 TN A1, Tampere
+DESCRIPTION:17:30 Ilves Vihreä B - NoPS Musta\n18:05 Apassit - Ilves Vihreä B\n18:45 Ilves Vihreä B - FC Vapsi/Sininen
+UID:20260511-Ilves_Vihreä_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260525T173000
+DTEND;TZID=Europe/Helsinki:20260525T191000
+SUMMARY:Ilves Vihreä B: Ylöjärven Ilves P2018, Tampere United/2018 +1
+LOCATION:Mouhijärven keskuskenttä TN A2, Mouhijärvi
+DESCRIPTION:17:30 Ilves Vihreä B - Ylöjärven Ilves P2018\n18:05 Ilves Vihreä B - Tampere United/2018\n18:45 MouMa - Ilves Vihreä B
+UID:20260525-Ilves_Vihreä_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260608T173000
+DTEND;TZID=Europe/Helsinki:20260608T191000
+SUMMARY:Ilves Vihreä B: PJK/sinivalkoinen, NoPS Musta +1
+LOCATION:Ahvenisjärvi 1 TN A2, Tampere
+DESCRIPTION:17:30 Ilves Vihreä B - PJK/sinivalkoinen\n18:05 Ilves Vihreä B - NoPS Musta\n18:45 Tampere United Oranssi/2 - Ilves Vihreä B
+UID:20260608-Ilves_Vihreä_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260622T173000
+DTEND;TZID=Europe/Helsinki:20260622T191500
+SUMMARY:Ilves Vihreä B: Tampere United/2018, NoPS Musta +1
+LOCATION:Ylöjärven Ilves Areena TN B, Ylöjärvi
+DESCRIPTION:17:30 Ilves Vihreä B - Tampere United/2018\n18:05 Ilves Vihreä B - NoPS Musta\n18:50 Ylöjärven Ilves/punainen - Ilves Vihreä B
+UID:20260622-Ilves_Vihreä_B@ilves-p2017
+END:VEVENT
+END:VCALENDAR
