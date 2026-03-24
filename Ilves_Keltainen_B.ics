@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Keltainen B – Piirisarjat 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260420T173000
+DTEND;TZID=Europe/Helsinki:20260420T190500
+SUMMARY:Ilves Keltainen B: Ylöjärven Ilves, Ilves/Keltavihreä B +1
+LOCATION:Ahvenisjärvi 2 TN A1, Tampere
+DESCRIPTION:17:30 Ilves Keltainen B - Ylöjärven Ilves\n18:05 Ilves Keltainen B - Ilves/Keltavihreä B\n18:40 FC Haka j./Valkoinen - Ilves Keltainen B
+UID:20260420-Ilves_Keltainen_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260504T173000
+DTEND;TZID=Europe/Helsinki:20260504T191000
+SUMMARY:Ilves Keltainen B: NoPS, HJS/Valkosininen +1
+LOCATION:Ylöjärven Ilves Areena TN A, Ylöjärvi
+DESCRIPTION:17:30 Ilves Keltainen B - NoPS\n18:05 HJS/Valkosininen - Ilves Keltainen B\n18:45 Ilves Keltainen B - Ilves/P2018/A
+UID:20260504-Ilves_Keltainen_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260523T143000
+DTEND;TZID=Europe/Helsinki:20260523T161000
+SUMMARY:Ilves Keltainen B: TPV/Punainen, Ilves/P2018/B +1
+LOCATION:Lamminrahka TN A2, Kangasala
+DESCRIPTION:14:30 Ilves Keltainen B - TPV/Punainen\n15:00 Ilves Keltainen B - Ilves/P2018/B\n15:45 FC Kangasala - Ilves Keltainen B
+UID:20260523-Ilves_Keltainen_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260601T180000
+DTEND;TZID=Europe/Helsinki:20260601T193500
+SUMMARY:Ilves Keltainen B: Akaa YJ, Ilves-Kissat jr Valkoinen +1
+LOCATION:Ahvenisjärvi 1 TN A2, Tampere
+DESCRIPTION:18:00 Ilves Keltainen B - Akaa YJ\n18:35 Ilves Keltainen B - Ilves-Kissat jr Valkoinen\n19:10 LeKi-futis/sininen - Ilves Keltainen B
+UID:20260601-Ilves_Keltainen_B@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260615T173000
+DTEND;TZID=Europe/Helsinki:20260615T191000
+SUMMARY:Ilves Keltainen B: HJS/sinivalkoinen, Ilves/Keltavihreä A +1
+LOCATION:Suorama N A2, Kangasala
+DESCRIPTION:17:30 Ilves Keltainen B - HJS/sinivalkoinen\n18:05 Ilves Keltainen B - Ilves/Keltavihreä A\n18:45 Tampere United - Ilves Keltainen B
+UID:20260615-Ilves_Keltainen_B@ilves-p2017
+END:VEVENT
+END:VCALENDAR
