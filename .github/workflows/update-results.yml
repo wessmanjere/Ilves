@@ -2,8 +2,8 @@ name: Päivitä ottelutulokset
 
 on:
   schedule:
-    # Ajetaan joka tunti klo 7-22 (UTC, eli 10-01 Suomen aikaa)
-    - cron: '0 7-22 * * *'
+    # Ajetaan joka toinen tunti klo 7-22 (UTC, eli 10-01 Suomen aikaa)
+    - cron: '0 7-22/2 * * *'
   workflow_dispatch:  # Voidaan ajaa myös käsin
 
 jobs:
