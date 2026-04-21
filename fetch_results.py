@@ -1,11 +1,11 @@
 """
-Hakee Ilves P2017-joukkueiden ottelutulokset Palloliitto-API:sta.
-Ajetaan GitHub Actionsin kautta automaattisesti.
+Hakee Ilves P2017-joukkueiden ottelutulokset Palloliiton tulospalvelusta.
+KÃ¤yttÃ¤Ã¤ Playwrightia Cloudflaren ohittamiseksi.
 """
 import json
-import urllib.request
-import urllib.error
+import asyncio
 from datetime import datetime, timezone
+from playwright.async_api import async_playwright
 
 TEAMS = {
     '35186280': 'Ilves / P2017',
@@ -19,41 +19,45 @@ TEAMS = {
 }
 
 BASE_URL = 'https://spl.torneopal.net/taso/rest/getMatches?team_id='
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Referer': 'https://tulospalvelu.palloliitto.fi/',
-    'Accept': 'application/json, text/plain, */*',
-    'Accept-Language': 'fi-FI,fi;q=0.9,en;q=0.8',
-}
 
-results = {}
-
-for team_id, team_name in TEAMS.items():
+async def fetch_team(page, team_id, team_name):
+    """Hakee yhden joukkueen tulokset API:sta selain-headereiden kanssa."""
     url = BASE_URL + team_id
-    req = urllib.request.Request(url, headers=HEADERS)
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            raw = resp.read().decode('utf-8')
-            data = json.loads(raw)
+        # KÃ¤ytetÃ¤Ã¤n sivun fetch-funktiota, jolloin selain lisÃ¤Ã¤ oikeat headerit
+        result = await page.evaluate(f"""
+            async () => {{
+                const resp = await fetch({json.dumps(url)}, {{
+                    headers: {{
+                        'Accept': 'application/json, text/plain, */*',
+                        'Referer': 'https://tulospalvelu.palloliitto.fi/',
+                    }}
+                }});
+                if (!resp.ok) return {{ error: resp.status }};
+                return await resp.json();
+            }}
+        """)
 
-        matches = data.get('matches', [])
+        if isinstance(result, dict) and 'error' in result:
+            print(f'  VIRHE {team_name}: HTTP {result["error"]}')
+            return []
 
-        # Debug: nÃ¤ytÃ¤ uniikit status- ja season-arvot ensimmÃ¤iseltÃ¤ joukkueelta
-        if team_id == '35186299':
+        matches = result.get('matches', []) if isinstance(result, dict) else []
+
+        # Debug ensimmÃ¤iselle joukkueelle
+        if team_id == '35186299' and matches:
             statuses = list({m.get('status') for m in matches})
             seasons = list({m.get('season_id') for m in matches})
             print(f'  DEBUG {team_name}: {len(matches)} ottelua, statukset={statuses}, kaudet={seasons}')
-            if matches:
-                print(f'  DEBUG esimerkki: {json.dumps(matches[0])}')
+            print(f'  DEBUG esimerkki: {json.dumps(matches[0])}')
 
-        # HyvÃ¤ksy ottelu jos sillÃ¤ on tulos (fs_A ja fs_B eivÃ¤t ole tyhjiÃ¤)
-        # Ei rajoiteta season_id:llÃ¤ koska arvo voi vaihdella
+        # HyvÃ¤ksy ottelu jos sillÃ¤ on tulos
         played = [
             m for m in matches
             if m.get('fs_A', '') != '' and m.get('fs_B', '') != ''
         ]
-
-        results[team_id] = [
+        print(f'  {team_name}: {len(played)} tulosta')
+        return [
             {
                 'date': m['date'],
                 'time': m['time'][:5],
@@ -62,25 +66,47 @@ for team_id, team_name in TEAMS.items():
             }
             for m in played
         ]
-        print(f'  {team_name}: {len(results[team_id])} tulosta')
 
-    except urllib.error.HTTPError as e:
-        print(f'  VIRHE {team_name}: HTTP {e.code} - {e.reason}')
-        results[team_id] = []
-    except urllib.error.URLError as e:
-        print(f'  VIRHE {team_name}: URL-virhe {e.reason}')
-        results[team_id] = []
     except Exception as e:
         print(f'  VIRHE {team_name}: {type(e).__name__}: {e}')
-        results[team_id] = []
+        return []
 
-output = {
-    'updated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
-    'results': results,
-}
 
-with open('results.json', 'w', encoding='utf-8') as f:
-    json.dump(output, f, ensure_ascii=False, indent=2)
+async def main():
+    results = {}
 
-total = sum(len(v) for v in results.values())
-print(f'\nValmis! {total} tulosta tallennettu results.json-tiedostoon.')
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            extra_http_headers={
+                'Accept-Language': 'fi-FI,fi;q=0.9,en;q=0.8',
+            }
+        )
+        page = await context.new_page()
+
+        # KÃ¤ydÃ¤Ã¤n ensin palloliitossa jotta evÃ¤steet asettuvat
+        try:
+            await page.goto('https://tulospalvelu.palloliitto.fi/', timeout=20000, wait_until='domcontentloaded')
+            print('  Palloliitto-sivu ladattu (evÃ¤steet asetettu)')
+        except Exception as e:
+            print(f'  Huom: etusivu ei latautunut ({e}), jatketaan silti...')
+
+        for team_id, team_name in TEAMS.items():
+            results[team_id] = await fetch_team(page, team_id, team_name)
+
+        await browser.close()
+
+    output = {
+        'updated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+        'results': results,
+    }
+
+    with open('results.json', 'w', encoding='utf-8') as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    total = sum(len(v) for v in results.values())
+    print(f'\nValmis! {total} tulosta tallennettu results.json-tiedostoon.')
+
+
+asyncio.run(main())
