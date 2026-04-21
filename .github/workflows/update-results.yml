@@ -16,6 +16,11 @@ jobs:
       - name: Hae repositorio
         uses: actions/checkout@v4
 
+      - name: Asenna Playwright
+        run: |
+          pip install playwright --break-system-packages
+          playwright install chromium --with-deps
+
       - name: Hae tulokset Palloliitosta
         run: python3 fetch_results.py
 
