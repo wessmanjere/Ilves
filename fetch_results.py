@@ -12,17 +12,18 @@ TEAMS = {
     '35186299': 'Ilves Keltainen A',
     '35186284': 'Ilves Keltainen B',
     '35186295': 'Ilves Keltainen C',
-    '35213619': 'Ilves / Keltavihreä A',
-    '35213621': 'Ilves / Keltavihreä B',
-    '35186300': 'Ilves Vihreä A',
-    '35186298': 'Ilves Vihreä B',
+    '35213619': 'Ilves / KeltavihreÃ¤ A',
+    '35213621': 'Ilves / KeltavihreÃ¤ B',
+    '35186300': 'Ilves VihreÃ¤ A',
+    '35186298': 'Ilves VihreÃ¤ B',
 }
 
 BASE_URL = 'https://spl.torneopal.net/taso/rest/getMatches?team_id='
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (compatible; results-fetcher)',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Referer': 'https://tulospalvelu.palloliitto.fi/',
-    'Accept': 'application/json',
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'fi-FI,fi;q=0.9,en;q=0.8',
 }
 
 results = {}
@@ -32,11 +33,26 @@ for team_id, team_name in TEAMS.items():
     req = urllib.request.Request(url, headers=HEADERS)
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode('utf-8'))
+            raw = resp.read().decode('utf-8')
+            data = json.loads(raw)
+
+        matches = data.get('matches', [])
+
+        # Debug: nÃ¤ytÃ¤ uniikit status- ja season-arvot ensimmÃ¤iseltÃ¤ joukkueelta
+        if team_id == '35186299':
+            statuses = list({m.get('status') for m in matches})
+            seasons = list({m.get('season_id') for m in matches})
+            print(f'  DEBUG {team_name}: {len(matches)} ottelua, statukset={statuses}, kaudet={seasons}')
+            if matches:
+                print(f'  DEBUG esimerkki: {json.dumps(matches[0])}')
+
+        # HyvÃ¤ksy ottelu jos sillÃ¤ on tulos (fs_A ja fs_B eivÃ¤t ole tyhjiÃ¤)
+        # Ei rajoiteta season_id:llÃ¤ koska arvo voi vaihdella
         played = [
-            m for m in data.get('matches', [])
-            if m.get('season_id') == '2026' and m.get('status') == 'Played'
+            m for m in matches
+            if m.get('fs_A', '') != '' and m.get('fs_B', '') != ''
         ]
+
         results[team_id] = [
             {
                 'date': m['date'],
@@ -47,11 +63,15 @@ for team_id, team_name in TEAMS.items():
             for m in played
         ]
         print(f'  {team_name}: {len(results[team_id])} tulosta')
+
     except urllib.error.HTTPError as e:
-        print(f'  VIRHE {team_name}: HTTP {e.code}')
+        print(f'  VIRHE {team_name}: HTTP {e.code} - {e.reason}')
+        results[team_id] = []
+    except urllib.error.URLError as e:
+        print(f'  VIRHE {team_name}: URL-virhe {e.reason}')
         results[team_id] = []
     except Exception as e:
-        print(f'  VIRHE {team_name}: {e}')
+        print(f'  VIRHE {team_name}: {type(e).__name__}: {e}')
         results[team_id] = []
 
 output = {
