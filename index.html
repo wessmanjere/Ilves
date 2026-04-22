@@ -1078,35 +1078,46 @@
   <script>
     async function loadResults() {
       try {
-        const teams = document.querySelectorAll('.team-card[data-team-id]');
-        await Promise.all(Array.from(teams).map(async card => {
+        for (const card of document.querySelectorAll('.team-card[data-team-id]')) {
           const teamId = card.dataset.teamId;
           try {
-            const resp = await fetch('https://spl.torneopal.fi/taso/widget.php?teamid=' + teamId + '&widget=schedule&t=' + Date.now());
+            const url = 'https://spl.torneopal.fi/taso/widget.php?teamid=' + teamId + '&widget=schedule&t=' + Date.now();
+            const resp = await fetch(url);
             const txt = await resp.text();
-            const m = txt.match(/document\.write\("([\s\S]*)"\);/);
-            if (!m) return;
-            const html = m[1].replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+            const startTag = 'document.write("';
+            const endTag = '");';
+            const si = txt.indexOf(startTag);
+            const ei = txt.lastIndexOf(endTag);
+            if (si < 0 || ei < 0) continue;
+            var raw = txt.substring(si + startTag.length, ei);
+            raw = raw.split('\\"').join('"').split("\\'").join("'");
             const tmp = document.createElement('div');
-            tmp.innerHTML = html;
-            tmp.querySelectorAll('table tr').forEach(row => {
+            tmp.innerHTML = raw;
+            const resultMap = {};
+            tmp.querySelectorAll('tr').forEach(function(row) {
               const cells = row.querySelectorAll('td');
               if (cells.length < 7) return;
-              const scoreText = cells[6].textContent.trim();
-              if (!scoreText || scoreText === 'ennakko' || scoreText === 'tuleva') return;
-              const dateFin = cells[1].textContent.trim();
-              const time = cells[2].textContent.trim();
-              const parts = dateFin.split('.');
-              if (parts.length !== 3) return;
-              const dateISO = parts[2] + '-' + parts[1] + '-' + parts[0];
-              const scoreEl = card.querySelector('[data-time="' + dateISO + ' ' + time + '"] .score');
-              if (scoreEl) scoreEl.textContent = scoreText;
+              const score = cells[6].textContent.trim();
+              if (!score || score === 'ennakko') return;
+              resultMap[cells[1].textContent.trim() + ' ' + cells[2].textContent.trim()] = score;
+            });
+            card.querySelectorAll('.date-group').forEach(function(dg) {
+              const dv = dg.querySelector('.date-venue-row');
+              if (!dv) return;
+              const dm = dv.textContent.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+              if (!dm) return;
+              const dk = dm[1].padStart(2,'0') + '.' + dm[2].padStart(2,'0') + '.' + dm[3];
+              dg.querySelectorAll('tr').forEach(function(row) {
+                const tEl = row.querySelector('.col-time');
+                const sEl = row.querySelector('.col-score');
+                if (!tEl || !sEl) return;
+                const v = resultMap[dk + ' ' + tEl.textContent.trim()];
+                if (v) sEl.textContent = v;
+              });
             });
           } catch(e) {}
-        }));
-      } catch (e) {
-        console.warn('Tulosten haku epäonnistui.');
-      }
+        }
+      } catch(e) { console.warn('Tulosten haku epäonnistui.'); }
     }
     loadResults();
   </script>
