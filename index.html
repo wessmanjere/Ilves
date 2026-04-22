@@ -1084,13 +1084,11 @@
             const url = 'https://spl.torneopal.fi/taso/widget.php?teamid=' + teamId + '&widget=schedule&t=' + Date.now();
             const resp = await fetch(url);
             const txt = await resp.text();
-            const startTag = 'document.write("';
-            const endTag = '");';
-            const si = txt.indexOf(startTag);
-            const ei = txt.lastIndexOf(endTag);
+            const si = txt.indexOf('document.write(\"');
+            const ei = txt.lastIndexOf('\");');
             if (si < 0 || ei < 0) continue;
-            var raw = txt.substring(si + startTag.length, ei);
-            raw = raw.split('\\"').join('"').split("\\'").join("'");
+            var raw = txt.substring(si + 16, ei);
+            raw = raw.split('\\"').join('"').split('\\'').join('');
             const tmp = document.createElement('div');
             tmp.innerHTML = raw;
             const resultMap = {};
@@ -1099,7 +1097,8 @@
               if (cells.length < 7) return;
               const score = cells[6].textContent.trim();
               if (!score || score === 'ennakko') return;
-              resultMap[cells[1].textContent.trim() + ' ' + cells[2].textContent.trim()] = score;
+              const key = cells[1].textContent.trim() + ' ' + cells[2].textContent.trim();
+              resultMap[key] = score;
             });
             card.querySelectorAll('.date-group').forEach(function(dg) {
               const dv = dg.querySelector('.date-venue-row');
