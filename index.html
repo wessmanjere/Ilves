@@ -1,188 +1,1114 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ilves – Piirisarjat 2026 – Otteluohjelmat</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0; padding: 0;
-            background: #f0f0f0;
-            color: #222;
-        }
-        header {
-            background: #000;
-            color: #FFCB00;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        header h1 { margin: 0; font-size: 1.3em; font-weight: bold; }
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            padding: 10px 16px;
-            background: #1a1a1a;
-            border-bottom: 3px solid #FFCB00;
-        }
-        .tab-btn {
-            background: #333;
-            color: #ccc;
-            border: none;
-            padding: 7px 13px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 0.82em;
-            transition: background 0.15s;
-        }
-        .tab-btn:hover { background: #555; color: #fff; }
-        .tab-btn.active {
-            background: #FFCB00;
-            color: #000;
-            font-weight: bold;
-        }
-        .content { padding: 16px; max-width: 1000px; }
-        .team-section { display: none; }
-        .team-section.active { display: block; }
-        .team-title {
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #000;
-            border-left: 4px solid #FFCB00;
-            padding-left: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            font-size: 0.88em;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        thead th {
-            background: #000;
-            color: #FFCB00;
-            padding: 9px 10px;
-            text-align: left;
-            font-size: 0.85em;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        tbody tr { border-bottom: 1px solid #f0f0f0; }
-        tbody tr:last-child { border-bottom: none; }
-        tbody tr:hover { background: #fffce6; }
-        td { padding: 7px 10px; }
-        td.score { font-weight: bold; color: #000; }
-        caption { display: none; }
-        .loading { color: #888; padding: 20px 0; font-style: italic; }
-        .error { color: #c00; padding: 20px 0; }
-        .updated { font-size: 0.75em; color: #999; margin-top: 12px; }
-        @media (max-width: 640px) {
-            .tabs { padding: 8px; gap: 3px; }
-            .tab-btn { font-size: 0.75em; padding: 6px 9px; }
-            .content { padding: 10px; }
-            thead th, td { padding: 6px 7px; font-size: 0.8em; }
-            /* Hide match number and field on small screens */
-            th:nth-child(1), td:nth-child(1),
-            th:nth-child(4), td:nth-child(4) { display: none; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ilves – Piirisarjat 2026 – Otteluohjelmat</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --green-dark:   #042E12;
+      --green-mid:    #073D18;
+      --green-card:   #0A4D1F;
+      --green-border: #1A6B35;
+      --green-light:  #2A8847;
+      --yellow:       #F5B000;
+      --yellow-light: #FFD04A;
+      --yellow-dim:   rgba(245,176,0,0.15);
+      --text-primary: #F0F0F0;
+      --text-muted:   #8BAF95;
+      --home-bg:      rgba(245,176,0,0.07);
+      --away-bg:      rgba(255,255,255,0.02);
+      --t2-accent:    #E07B00;
+      --t2-dim:       rgba(224,123,0,0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--green-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #021A0A 0%, #063015 60%, #021A0A 100%);
+      border-bottom: 3px solid var(--yellow);
+      padding: 28px 40px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo-wrap {
+      width: 72px;
+      height: 72px;
+      background: var(--yellow);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(245,176,0,0.35);
+      overflow: hidden;
+    }
+    .logo-wrap img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+    }
+    header h1 span { color: var(--yellow); }
+    header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .season-badge {
+      margin-left: auto;
+      background: var(--yellow);
+      color: #0A2A14;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    /* ── DIVISION SECTION ── */
+    .division-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 16px;
+    }
+    .division-header:first-of-type { margin-top: 0; }
+    .division-pill {
+      background: var(--yellow);
+      color: #042E12;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+    .division-pill.taso2 {
+      background: var(--t2-accent);
+      color: #fff;
+    }
+    .division-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #E0F0E5;
+    }
+
+    /* ── TEAM CARD ── */
+    .team-card {
+      background: var(--green-card);
+      border: 1px solid var(--green-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .team-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      background: var(--green-mid);
+      border-bottom: 2px solid var(--yellow);
+    }
+    .team-header.taso2 { border-bottom-color: var(--t2-accent); }
+    .team-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+    }
+    .team-dot.taso2 { background: var(--t2-accent); }
+    .team-name { font-size: 16px; font-weight: 700; }
+    .team-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+    .match-count {
+      background: rgba(245,176,0,0.12);
+      border: 1px solid rgba(245,176,0,0.25);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: var(--yellow-light);
+    }
+
+
+
+
+    /* ── VENUE LINK ── */
+    a.venue-link {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255,255,255,0.25);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    a.venue-link:hover { color: #fff; border-bottom-color: rgba(255,255,255,0.6); }
+    /* ── CAL LINK ── */
+    .cal-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(245,176,0,0.10);
+      border: 1px solid rgba(245,176,0,0.25);
+      padding: 3px 10px; border-radius: 12px;
+      font-size: 12px; color: var(--yellow-light);
+      text-decoration: none; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .cal-link:hover { background: rgba(245,176,0,0.22); }
+    .cal-link.taso2 {
+      background: rgba(100,160,220,0.10);
+      border-color: rgba(100,160,220,0.25);
+      color: var(--t2-accent);
+    }
+    .cal-link.taso2:hover { background: rgba(100,160,220,0.22); }
+    /* ── SCORE COLUMN ── */
+    .col-score {
+      text-align: center;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-muted);
+      min-width: 64px;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+    .col-score.played {
+      color: var(--yellow-light);
+      background: rgba(245,176,0,0.08);
+      border-radius: 4px;
+    }
+    #last-updated {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    /* ── ROUND GROUP ── */
+    .round-group { padding: 16px 20px 8px; }
+    .round-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .round-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--green-border);
+    }
+
+    /* ── DATE GROUP ── */
+    .date-group { margin-bottom: 14px; }
+    .date-venue-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .date-badge {
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(245,176,0,0.12);
+      border: 1px solid rgba(245,176,0,0.3);
+      border-radius: 6px;
+      padding: 5px 12px;
+      color: var(--yellow-light);
+      white-space: nowrap;
+    }
+    .venue-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      border-radius: 6px;
+      padding: 5px 10px;
+      border: 1px solid var(--green-border);
+    }
+    .venue-tag .pin { font-size: 12px; }
+    .venue-tag.unknown { color: rgba(255,255,255,0.25); font-style: italic; }
+
+    /* ── MATCH TABLE ── */
+    .match-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .match-table tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .match-table tr:last-child { border-bottom: none; }
+    .match-table tr.home-match { background: var(--home-bg); }
+    .match-table tr.away-match { background: var(--away-bg); }
+    .match-table tr:hover {
+      background: rgba(245,176,0,0.10);
+      transition: background 0.12s;
+    }
+    .match-table td {
+      padding: 9px 10px;
+      vertical-align: middle;
+      font-size: 13.5px;
+    }
+
+    td.col-time {
+      width: 60px;
+      font-weight: 800;
+      color: var(--yellow);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    td.col-time.taso2 { color: var(--t2-accent); }
+
+    td.col-home {
+      text-align: right;
+      width: 34%;
+      font-weight: 400;
+      color: #C8E0CE;
+    }
+    td.col-home .ilves { font-weight: 700; color: #fff; }
+
+    td.col-vs {
+      text-align: center;
+      width: 30px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    td.col-away {
+      width: 34%;
+      font-weight: 400;
+      color: #C8E0CE;
+    }
+    td.col-away .ilves { font-weight: 700; color: #fff; }
+
+    td.col-badge {
+      width: 52px;
+      text-align: center;
+    }
+    .hv-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .hv-badge.home {
+      background: rgba(245,176,0,0.22);
+      color: var(--yellow-light);
+      border: 1px solid rgba(245,176,0,0.45);
+    }
+    .hv-badge.away {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* no matches */
+    .no-matches {
+      padding: 24px 20px;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--green-border);
+      margin-top: 20px;
+    }
+    footer a { color: var(--yellow); text-decoration: none; }
+
+    .note-box {
+      background: rgba(245,176,0,0.06);
+      border: 1px solid rgba(245,176,0,0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .note-box strong { color: var(--yellow-light); }
+
+    /* spacing helper */
+    .mt { margin-top: 18px; }
+  /* ════════════════════════════
+       MOBIILIOPTIMOINT (max 650px)
+    ════════════════════════════ */
+    @media (max-width: 650px) {
+
+      /* ── Header ── */
+      header {
+        padding: 14px 16px 12px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .logo-wrap {
+        width: 48px;
+        height: 48px;
+      }
+      .logo-wrap img {
+        width: 42px;
+        height: 42px;
+      }
+      header h1 {
+        font-size: 17px;
+        letter-spacing: -0.3px;
+      }
+      header p {
+        font-size: 11px;
+        margin-top: 2px;
+      }
+      .season-badge {
+        font-size: 11px;
+        padding: 5px 11px;
+        margin-left: auto;
+      }
+      #last-updated { display: block; margin-top: 4px; }
+
+      /* ── Layout ── */
+      main {
+        padding: 20px 10px 48px;
+      }
+
+      /* ── Division header ── */
+      .division-header {
+        margin: 28px 0 12px;
+        gap: 8px;
+      }
+      .division-title { font-size: 15px; }
+      .division-pill { font-size: 10px; padding: 4px 10px; }
+
+      /* ── Team card ── */
+      .team-card { border-radius: 10px; margin-bottom: 14px; }
+      .team-header { padding: 10px 14px; gap: 10px; }
+      .team-name { font-size: 14px; }
+      .team-meta { display: none; }
+      .match-count { font-size: 11px; padding: 2px 8px; }
+
+      /* ── Round group ── */
+      .round-group { padding: 12px 10px 6px; }
+      .round-label { font-size: 10px; margin-bottom: 10px; }
+      .date-group { margin-bottom: 12px; }
+
+      /* ── Date & venue ── */
+      .date-venue-row { gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+      .date-badge { font-size: 11px; padding: 4px 9px; }
+      .venue-tag { font-size: 10.5px; }
+
+      /* ── Match table ── */
+      .match-table {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .match-table td {
+        padding: 8px 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .col-time {
+        width: 44px;
+        font-size: 13px;
+        font-weight: 700;
+        padding-left: 6px !important;
+      }
+      .col-time.taso2 {
+        font-size: 13px;
+      }
+      .col-home {
+        font-size: 12px;
+        text-align: right;
+        width: 32%;
+      }
+      .col-vs {
+        width: 18px;
+        font-size: 11px;
+        padding: 0 2px;
+        text-align: center;
+      }
+      .col-away {
+        font-size: 12px;
+        width: 32%;
+      }
+      .col-score {
+        width: 46px;
+        font-size: 13px;
+        padding-right: 6px !important;
+      }
+      .ilves {
+        font-size: 12px;
+      }
+
+      /* ── Footer ── */
+      footer { padding: 18px 16px; font-size: 11px; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div>
-            <h1>Ilves – Piirisarjat 2026 – Otteluohjelmat</h1>
+
+<header>
+  <div class="logo-wrap">
+    <img src="https://tulospalvelu.palloliitto.fi/logo/palloliitto/21x.png"
+         alt="Ilves" onerror="this.style.display='none';this.parentNode.innerHTML='🐆';" />
+  </div>
+  <div>
+    <h1>ILVES P2017 <span>PIIRISARJAT</span></h1>
+    <p>Otteluohjelmat · Kevät 2026 · P9 &amp; P10</p>
+  </div>
+  <div class="season-badge">Kausi 2026</div>
+</header>
+
+<main>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       P9 TASO 1
+  ═══════════════════════════════════════════════════ -->
+  <div class="division-header">
+    <div class="division-pill">P9 · Taso 1</div>
+  </div>
+
+  <!-- ── Keltainen A ── -->
+  <div class="team-card" data-team-id="35186299">
+    <div class="team-header">
+      <div class="team-dot"></div>
+      <div class="team-name">Ilves Keltainen A</div>
+      <div class="team-meta">P9 Taso 1</div>
+      <div class="match-count">15 ottelua</div>
+      <a class="cal-link" href="Ilves_Keltainen_A.ics" download>📅 Kalenteri</a>
+    </div>
+    <div class="round-group">
+      <div class="round-label">Kierros 4 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;20.4.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%202%20TN%20A1%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A1, Tampere</a></div>
         </div>
-    </header>
-    <div class="tabs" id="tabs"></div>
-    <div class="content">
-        <div id="content"></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">TPV/Punainen</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">Akaa YJ</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen A</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">Ilves/Keltavihreä A</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+
+      <div class="round-label mt">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ke &nbsp;6.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Hakkari%20TN%20A2%2C%20Lemp%C3%A4%C3%A4l%C3%A4%2C%20Finland" target="_blank" rel="noopener">Hakkari TN A2, Lempäälä</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">18:15</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">HJS/sinivalkoinen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">Ilves/Keltavihreä B</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">19:15</td><td class="col-home">LeKi-futis/sininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;18.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%202%20TN%20A2%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A2, Tampere</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">FC Haka j./Valkoinen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">Tampere United</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves/P2018/A</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;1.6.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%201%20TN%20A2%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 1 TN A2, Tampere</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">HJS/Valkosininen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves/P2018/B</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;15.6.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Suorama%20N%20A2%2C%20Kangasala%2C%20Finland" target="_blank" rel="noopener">Suorama N A2, Kangasala</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">NoPS</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen A</span></td><td class="col-vs">—</td><td class="col-away">Ilves-Kissat jr Valkoinen</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:40</td><td class="col-home">FC Kangasala</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Keltainen B ── -->
+  <div class="team-card" data-team-id="35186284">
+    <div class="team-header">
+      <div class="team-dot"></div>
+      <div class="team-name">Ilves Keltainen B</div>
+      <div class="team-meta">P9 Taso 1</div>
+      <div class="match-count">15 ottelua</div>
+      <a class="cal-link" href="Ilves_Keltainen_B.ics" download>📅 Kalenteri</a>
+    </div>
+    <div class="round-group">
+      <div class="round-label">Kierros 4 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;20.4.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Sahara+TN+A2%2C+Valkeakoski%2C+Finland" target="_blank" rel="noopener">Sahara TN A2, Valkeakoski</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Ilves/Keltavihreä B</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:40</td><td class="col-home">FC Haka j./Valkoinen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+
+      <div class="round-label mt">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;4.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+A1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A1, Tampere</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">NoPS</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">HJS/Valkosininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Ilves/P2018/A</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">la &nbsp;23.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Lamminrahka%20TN%20A2%2C%20Kangasala%2C%20Finland" target="_blank" rel="noopener">Lamminrahka TN A2, Kangasala</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">14:30</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">TPV/Punainen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">15:00</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Ilves/P2018/B</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">15:45</td><td class="col-home">FC Kangasala</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;1.6.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Hakkari+TN+A2%2C+Lemp%C3%A4%C3%A4l%C3%A4%2C+Finland" target="_blank" rel="noopener">Hakkari TN A2, Lempäälä</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">18:00</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Akaa YJ</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:35</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Ilves-Kissat jr Valkoinen</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">19:10</td><td class="col-home">LeKi-futis/sininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ma &nbsp;15.6.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+A2%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A2, Tampere</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">HJS/sinivalkoinen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen B</span></td><td class="col-vs">—</td><td class="col-away">Ilves/Keltavihreä A</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Tampere United</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Keltainen C ── -->
+  <div class="team-card" data-team-id="35186295">
+    <div class="team-header"><div class="team-dot"></div><div class="team-name">Ilves Keltainen C</div><div class="team-meta">P9 Taso 1</div><div class="match-count">15 ottelua</div>
+      <a class="cal-link" href="Ilves_Keltainen_C.ics" download>📅 Kalenteri</a></div>
+    <div class="round-group">
+      <div class="round-label">Kierros 4 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;20.4.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">LeKi-futis/sininen</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">FC Kangasala</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen C</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">Ilves/P2018/A</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ke &nbsp;6.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=TP-49+Areena+A1%2C+Toijala%2C+Finland" target="_blank" rel="noopener">TP-49 Areena A1, Toijala</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">17:30</td><td class="col-home">Akaa YJ</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen C</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:00</td><td class="col-home">Tampere United</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen C</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:30</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">Ilves/P2018/B</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;18.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B2%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B2, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">HJS/sinivalkoinen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves-Kissat jr Valkoinen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen C</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;1.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+A2%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A2, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">FC Haka j./Valkoinen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">NoPS</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves/Keltavihreä A</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen C</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;15.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B2%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B2, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">HJS/Valkosininen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Keltainen C</span></td><td class="col-vs">—</td><td class="col-away">Ilves/Keltavihreä B</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">TPV/Punainen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Keltainen C</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Keltavihreä A ── -->
+  <div class="team-card" data-team-id="35213619">
+    <div class="team-header"><div class="team-dot"></div><div class="team-name">Ilves / Keltavihreä A</div><div class="team-meta">P9 Taso 1</div><div class="match-count">15 ottelua</div>
+      <a class="cal-link" href="Ilves_Keltavihreä_A.ics" download>📅 Kalenteri</a></div>
+    <div class="round-group">
+      <div class="round-label">Kierros 4 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;20.4.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+A2%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A2, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">Akaa YJ</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">TPV/Punainen</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves Keltainen A</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;4.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Yl%C3%B6j%C3%A4rven%20Ilves%20Areena%20TN%20A%2C%20Yl%C3%B6j%C3%A4rvi%2C%20Finland" target="_blank" rel="noopener">Ylöjärven Ilves Areena TN A, Ylöjärvi</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">17:30</td><td class="col-home">Ylöjärven Ilves</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">PJK/sininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:50</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">FC Kangasala</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;18.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Pulleri+7+N+A1%2C+H%C3%A4meenlinna%2C+Finland" target="_blank" rel="noopener">Pulleri 7 N A1, Hämeenlinna</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">17:30</td><td class="col-home">HJS/Valkosininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">Ilves Vihreä A</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">LeKi-futis/sininen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;1.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+A1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">NoPS</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">FC Haka j./Valkoinen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">Ilves Keltainen C</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;15.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+A1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">17:30</td><td class="col-home">Tampere United</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">Ilves Keltainen B</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä A</span></td><td class="col-vs">—</td><td class="col-away">HJS/sinivalkoinen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Keltavihreä B ── -->
+  <div class="team-card" data-team-id="35213621">
+    <div class="team-header"><div class="team-dot"></div><div class="team-name">Ilves / Keltavihreä B</div><div class="team-meta">P9 Taso 1</div><div class="match-count">15 ottelua</div>
+      <a class="cal-link" href="Ilves_Keltavihreä_B.ics" download>📅 Kalenteri</a></div>
+    <div class="round-group">
+      <div class="round-label">Kierros 4 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;20.4.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Sahara+TN+A1%2C+Valkeakoski%2C+Finland" target="_blank" rel="noopener">Sahara TN A1, Valkeakoski</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">17:30</td><td class="col-home">FC Haka j./Valkoinen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">Ilves Keltainen B</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:40</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ke &nbsp;6.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Hakkari+TN+A1%2C+Lemp%C3%A4%C3%A4l%C3%A4%2C+Finland" target="_blank" rel="noopener">Hakkari TN A1, Lempäälä</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">18:15</td><td class="col-home">LeKi-futis/sininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves Keltainen A</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">19:15</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-vs">—</td><td class="col-away">HJS/sinivalkoinen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ke &nbsp;20.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Harjuniitty+TN+A1%2C+Nokia%2C+Finland" target="_blank" rel="noopener">Harjuniitty TN A1, Nokia</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">18:00</td><td class="col-home">NoPS</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:35</td><td class="col-home">PJK/sininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">19:15</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-vs">—</td><td class="col-away">Akaa YJ</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;1.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-vs">—</td><td class="col-away">Tampere United</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">FC Kangasala</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-vs">—</td><td class="col-away">Ilves Vihreä A</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;15.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time">17:30</td><td class="col-home">TPV/Punainen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">Ilves Keltainen C</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves/Keltavihreä B</span></td><td class="col-vs">—</td><td class="col-away">HJS/Valkosininen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Vihreä A ── -->
+  <div class="team-card" data-team-id="35186300">
+    <div class="team-header"><div class="team-dot"></div><div class="team-name">Ilves Vihreä A</div><div class="team-meta">P9 Taso 1</div><div class="match-count">15 ottelua</div>
+      <a class="cal-link" href="Ilves_Vihreä_A.ics" download>📅 Kalenteri</a></div>
+    <div class="round-group">
+      <div class="round-label">Kierros 4 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">to &nbsp;23.4.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Pulleri%20TN%202%20A2%2C%20H%C3%A4meenlinna%2C%20Finland" target="_blank" rel="noopener">Pulleri TN 2 A2, Hämeenlinna</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">NoPS</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">Ilves/P2018/B</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">HJS/sinivalkoinen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;4.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B1%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">TPV/Punainen</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:05</td><td class="col-home">FC Haka j./Valkoinen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä A</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">Ilves-Kissat jr Valkoinen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;18.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Pulleri+7+N+A2%2C+H%C3%A4meenlinna%2C+Finland" target="_blank" rel="noopener">Pulleri 7 N A2, Hämeenlinna</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">LeKi-futis/sininen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">Ilves/Keltavihreä A</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">HJS/Valkosininen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;1.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi+2+TN+B2%2C+Tampere%2C+Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN B2, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">FC Kangasala</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">Tampere United</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:45</td><td class="col-home">Ilves/Keltavihreä B</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;15.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Yl%C3%B6j%C3%A4rven+Ilves+Areena+TN+B%2C+Yl%C3%B6j%C3%A4rvi%2C+Finland" target="_blank" rel="noopener">Ylöjärven Ilves Areena TN B, Ylöjärvi</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">Akaa YJ</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä A</span></td><td class="col-vs">—</td><td class="col-away">Ilves/P2018/A</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time">18:50</td><td class="col-home">Ylöjärven Ilves</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä A</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       P9 TASO 2
+  ═══════════════════════════════════════════════════ -->
+  <div class="division-header">
+    <div class="division-pill taso2">P9 · Taso 2</div>
+    <div class="division-title">Ilves Vihreä B</div>
+  </div>
+
+  <div class="team-card" data-team-id="35186298">
+    <div class="team-header taso2"><div class="team-dot taso2"></div><div class="team-name">Ilves Vihreä B</div><div class="team-meta">P9 Taso 2</div><div class="match-count">14 ottelua</div>
+      <a class="cal-link taso2" href="Ilves_Vihreä_B.ics" download>📅 Kalenteri</a></div>
+    <div class="round-group">
+      <div class="round-label">Kierros 5 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">la &nbsp;2.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Hoppu+TN+A1%2C+Vammala%2C+Finland" target="_blank" rel="noopener">Hoppu TN A1, Vammala</a></div></div>
+        <table class="match-table">
+          <tr class="away-match"><td class="col-time taso2">13:50</td><td class="col-home">Ylöjärven Ilves/punainen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time taso2">14:40</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">FC Vapsi/Sininen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;11.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%201%20TN%20A1%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 1 TN A1, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time taso2">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">NoPS Musta</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time taso2">18:05</td><td class="col-home">Apassit</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä B</span></td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time taso2">18:45</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">FC Vapsi/Sininen</td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;25.5.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Mouhij%C3%A4rven%20keskuskentt%C3%A4%20TN%20A2%2C%20Mouhij%C3%A4rvi%2C%20Finland" target="_blank" rel="noopener">Mouhijärven keskuskenttä TN A2, Mouhijärvi</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time taso2">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves P2018</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time taso2">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">Tampere United/2018</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time taso2">18:45</td><td class="col-home">MouMa</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+
+      <div class="round-label mt">Kierros 6 / 2026</div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;8.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%201%20TN%20A2%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 1 TN A2, Tampere</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time taso2">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">PJK/sinivalkoinen</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time taso2">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">NoPS Musta</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time taso2">18:45</td><td class="col-home">Tampere United Oranssi/2</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+      <div class="date-group">
+        <div class="date-venue-row"><div class="date-badge">ma &nbsp;22.6.2026</div><div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Yl%C3%B6j%C3%A4rven%20Ilves%20Areena%20TN%20B%2C%20Yl%C3%B6j%C3%A4rvi%2C%20Finland" target="_blank" rel="noopener">Ylöjärven Ilves Areena TN B, Ylöjärvi</a></div></div>
+        <table class="match-table">
+          <tr class="home-match"><td class="col-time taso2">17:30</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">Tampere United/2018</td><td class="col-score">—</td></tr>
+          <tr class="home-match"><td class="col-time taso2">18:05</td><td class="col-home"><span class="ilves">Ilves Vihreä B</span></td><td class="col-vs">—</td><td class="col-away">NoPS Musta</td><td class="col-score">—</td></tr>
+          <tr class="away-match"><td class="col-time taso2">18:50</td><td class="col-home">Ylöjärven Ilves/punainen</td><td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves Vihreä B</span></td><td class="col-score">—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       P10 TASO 1
+  ═══════════════════════════════════════════════════ -->
+  <div class="division-header">
+    <div class="division-pill">P10 · Taso 1</div>
+    <div class="division-title">Ilves / P2017</div>
+  </div>
+
+  <div class="team-card" data-team-id="35186280">
+    <div class="team-header">
+      <div class="team-dot"></div>
+      <div class="team-name">Ilves / P2017</div>
+      <div class="team-meta">P10 Taso 1</div>
+      <div class="match-count">18 ottelua</div>
     </div>
 
-    <script>
-    var TEAMS = [
-        {id: '35186280', name: 'Ilves / P2017'},
-        {id: '35186299', name: 'Ilves Keltainen A'},
-        {id: '35186284', name: 'Ilves Keltainen B'},
-        {id: '35186295', name: 'Ilves Keltainen C'},
-        {id: '35213619', name: 'Ilves / Keltavihreä A'},
-        {id: '35213621', name: 'Ilves / Keltavihreä B'},
-        {id: '35186300', name: 'Ilves Vihreä A'},
-        {id: '35186298', name: 'Ilves Vihreä B'}
-    ];
+    <div class="round-group">
+      <div class="round-label">Kierros 5 / 2026</div>
 
-    function fetchTeam(team) {
-        var url = 'https://spl.torneopal.fi/taso/widget.php?teamid=' + team.id + '&widget=schedule&cache=' + Date.now();
-        return fetch(url)
-            .then(function(r) { return r.text(); })
-            .then(function(txt) {
-                var m = txt.match(/document\.write\("([\s\S]*)"\);/);
-                if (!m) return null;
-                var html = m[1]
-                    .replace(/\\"/g, '"')
-                    .replace(/\\'/g, "'")
-                    .replace(/\\\\/g, '\\');
-                var tmp = document.createElement('div');
-                tmp.innerHTML = html;
-                // Remove embedded scripts
-                var scripts = tmp.querySelectorAll('script, style');
-                scripts.forEach(function(s) { s.remove(); });
-                return tmp.querySelector('table');
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">su &nbsp;3.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Pulleri%20TN%201%20B%2C%20H%C3%A4meenlinna%2C%20Finland" target="_blank" rel="noopener">Pulleri TN 1 B, Hämeenlinna</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="away-match">
+            <td class="col-time">17:45</td><td class="col-home">TPV Punainen</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="home-match">
+            <td class="col-time">18:20</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">HJS/Valkosininen</td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">18:55</td><td class="col-home">PJK</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ti &nbsp;12.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%202%20TN%20A%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 2 TN A, Tampere</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match">
+            <td class="col-time">17:30</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">Pyry/Punainen</td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">17:55</td><td class="col-home">Tampere United</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">19:00</td><td class="col-home">NoPS</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="home-match">
+            <td class="col-time">19:25</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">Ilves/2 vihreä</td>
+            <td class="col-score">—</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">ti &nbsp;26.5.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Ahvenisj%C3%A4rvi%201%20TN%20A%2C%20Tampere%2C%20Finland" target="_blank" rel="noopener">Ahvenisjärvi 1 TN A, Tampere</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="away-match">
+            <td class="col-time">17:30</td><td class="col-home">Ilves/2 keltavihreä</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">18:05</td><td class="col-home">Ilves/2 vihreä</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="home-match">
+            <td class="col-time">18:45</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves Punainen</td>
+            <td class="col-score">—</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="round-label mt">Kierros 6 / 2026</div>
+
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">to &nbsp;11.6.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Hakkari%20TN%20B%2C%20Lemp%C3%A4%C3%A4l%C3%A4%2C%20Finland" target="_blank" rel="noopener">Hakkari TN B, Lempäälä</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="away-match">
+            <td class="col-time">17:30</td><td class="col-home">TPV Punainen</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="home-match">
+            <td class="col-time">18:20</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves Punainen</td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="home-match">
+            <td class="col-time">19:00</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">LeKi-futis/sininen</td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">19:25</td><td class="col-home">Ilves-Kissat jr Punainen</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="date-group">
+        <div class="date-venue-row">
+          <div class="date-badge">pe &nbsp;26.6.2026</div>
+          <div class="venue-tag"><span class="pin">📍</span> <a class="venue-link" href="https://maps.google.com/?q=Keskuskentt%C3%A4%20TN%20B%2C%20Pirkkala%2C%20Finland" target="_blank" rel="noopener">Keskuskenttä TN B, Pirkkala</a></div>
+        </div>
+        <table class="match-table">
+          <tr class="home-match">
+            <td class="col-time">18:10</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">Ilves-Kissat jr Punainen</td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">18:35</td><td class="col-home">Ilves/2 keltainen</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="home-match">
+            <td class="col-time">19:15</td><td class="col-home"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-vs">—</td><td class="col-away">Ylöjärven Ilves</td>
+            <td class="col-score">—</td>
+          </tr>
+          <tr class="away-match">
+            <td class="col-time">19:40</td><td class="col-home">PJK</td>
+            <td class="col-vs">—</td><td class="col-away"><span class="ilves">Ilves/P2017</span></td>
+            <td class="col-score">—</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</main>
+
+<footer>
+  Tiedot haettu: <a href="https://tulospalvelu.palloliitto.fi" target="_blank">tulospalvelu.palloliitto.fi</a>
+  <span id="last-updated"></span>
+</footer>
+
+
+  <script>
+    async function loadResults() {
+      try {
+        const teams = document.querySelectorAll('.team-card[data-team-id]');
+        await Promise.all(Array.from(teams).map(async card => {
+          const teamId = card.dataset.teamId;
+          try {
+            const resp = await fetch('https://spl.torneopal.fi/taso/widget.php?teamid=' + teamId + '&widget=schedule&t=' + Date.now());
+            const txt = await resp.text();
+            const m = txt.match(/document\.write\("([\s\S]*)"\);/);
+            if (!m) return;
+            const html = m[1].replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            tmp.querySelectorAll('table tr').forEach(row => {
+              const cells = row.querySelectorAll('td');
+              if (cells.length < 7) return;
+              const scoreText = cells[6].textContent.trim();
+              if (!scoreText || scoreText === 'ennakko' || scoreText === 'tuleva') return;
+              const dateFin = cells[1].textContent.trim();
+              const time = cells[2].textContent.trim();
+              const parts = dateFin.split('.');
+              if (parts.length !== 3) return;
+              const dateISO = parts[2] + '-' + parts[1] + '-' + parts[0];
+              const scoreEl = card.querySelector('[data-time="' + dateISO + ' ' + time + '"] .score');
+              if (scoreEl) scoreEl.textContent = scoreText;
             });
+          } catch(e) {}
+        }));
+      } catch (e) {
+        console.warn('Tulosten haku epäonnistui.');
+      }
     }
-
-    function buildTable(tbl, teamName) {
-        if (!tbl) return '<p class="error">Ei otteluohjelmaa.</p>';
-        // Replace score column classes for styling
-        var tds = tbl.querySelectorAll('td');
-        tds.forEach(function(td) {
-            if (td.className.indexOf('score') !== -1) td.className = 'score';
-        });
-        return tbl.outerHTML;
-    }
-
-    function showTab(idx) {
-        document.querySelectorAll('.tab-btn').forEach(function(b, i) {
-            b.classList.toggle('active', i === idx);
-        });
-        document.querySelectorAll('.team-section').forEach(function(s, i) {
-            s.classList.toggle('active', i === idx);
-        });
-    }
-
-    var tabsEl = document.getElementById('tabs');
-    var contentEl = document.getElementById('content');
-    var now = new Date();
-    var ts = now.toLocaleDateString('fi-FI') + ' ' + now.toLocaleTimeString('fi-FI', {hour:'2-digit', minute:'2-digit'});
-
-    TEAMS.forEach(function(team, i) {
-        var btn = document.createElement('button');
-        btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
-        btn.textContent = team.name;
-        btn.setAttribute('data-idx', i);
-        btn.onclick = function() { showTab(i); };
-        tabsEl.appendChild(btn);
-
-        var section = document.createElement('div');
-        section.className = 'team-section' + (i === 0 ? ' active' : '');
-        section.innerHTML = '<div class="team-title">' + team.name + '</div><p class="loading">Ladataan otteluohjelmaa...</p>';
-        contentEl.appendChild(section);
-
-        fetchTeam(team).then(function(tbl) {
-            var html = buildTable(tbl, team.name);
-            section.innerHTML = '<div class="team-title">' + team.name + '</div>' + html
-                + '<p class="updated">Päivitetty: ' + ts + '</p>';
-        }).catch(function(err) {
-            section.innerHTML = '<div class="team-title">' + team.name + '</div>'
-                + '<p class="error">Virhe ladattaessa tietoja: ' + err.message + '</p>';
-        });
-    });
-    </script>
+    loadResults();
+  </script>
 </body>
 </html>
