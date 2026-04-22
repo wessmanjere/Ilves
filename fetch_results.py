@@ -1,6 +1,6 @@
 """
 Hakee Ilves P2017-joukkueiden ottelutulokset Palloliiton tulospalvelusta.
-KÃ¤yttÃ¤Ã¤ Playwrightia Cloudflaren ohittamiseksi.
+Navigoi oikealle tiimisivulle ja kaappaa verkkoliikenne.
 """
 import json
 import asyncio
@@ -12,64 +12,73 @@ TEAMS = {
     '35186299': 'Ilves Keltainen A',
     '35186284': 'Ilves Keltainen B',
     '35186295': 'Ilves Keltainen C',
-    '35213619': 'Ilves / KeltavihreÃ¤ A',
-    '35213621': 'Ilves / KeltavihreÃ¤ B',
-    '35186300': 'Ilves VihreÃ¤ A',
-    '35186298': 'Ilves VihreÃ¤ B',
+    '35213619': 'Ilves / Keltavihreä A',
+    '35213621': 'Ilves / Keltavihreä B',
+    '35186300': 'Ilves Vihreä A',
+    '35186298': 'Ilves Vihreä B',
 }
 
-BASE_URL = 'https://spl.torneopal.net/taso/rest/getMatches?team_id='
+TEAM_PAGE = 'https://tulospalvelu.palloliitto.fi/team/{}/matches'
+API_URL = 'https://spl.torneopal.net/taso/rest/getMatches?team_id={}'
 
-async def fetch_team(page, team_id, team_name):
-    """Hakee yhden joukkueen tulokset API:sta selain-headereiden kanssa."""
-    url = BASE_URL + team_id
+
+async def fetch_team(context, team_id, team_name):
+    """Navigoi tiimisivulle ja kaappaa API-vastaus verkkoliikenteestä."""
+    page = await context.new_page()
+    captured = {}
+
+    async def handle_response(response):
+        url = response.url
+        if 'getMatches' in url and team_id in url:
+            try:
+                body = await response.json()
+                captured['data'] = body
+            except Exception:
+                pass
+
+    page.on('response', handle_response)
+
     try:
-        # KÃ¤ytetÃ¤Ã¤n sivun fetch-funktiota, jolloin selain lisÃ¤Ã¤ oikeat headerit
-        result = await page.evaluate(f"""
-            async () => {{
-                const resp = await fetch({json.dumps(url)}, {{
-                    headers: {{
-                        'Accept': 'application/json, text/plain, */*',
-                        'Referer': 'https://tulospalvelu.palloliitto.fi/',
-                    }}
-                }});
-                if (!resp.ok) return {{ error: resp.status }};
-                return await resp.json();
-            }}
-        """)
+        url = TEAM_PAGE.format(team_id)
+        await page.goto(url, timeout=30000, wait_until='networkidle')
 
-        if isinstance(result, dict) and 'error' in result:
-            print(f'  VIRHE {team_name}: HTTP {result["error"]}')
-            return []
-
-        matches = result.get('matches', []) if isinstance(result, dict) else []
-
-        # Debug ensimmÃ¤iselle joukkueelle
-        if team_id == '35186299' and matches:
-            statuses = list({m.get('status') for m in matches})
-            seasons = list({m.get('season_id') for m in matches})
-            print(f'  DEBUG {team_name}: {len(matches)} ottelua, statukset={statuses}, kaudet={seasons}')
-            print(f'  DEBUG esimerkki: {json.dumps(matches[0])}')
-
-        # HyvÃ¤ksy ottelu jos sillÃ¤ on tulos
-        played = [
-            m for m in matches
-            if m.get('fs_A', '') != '' and m.get('fs_B', '') != ''
-        ]
-        print(f'  {team_name}: {len(played)} tulosta')
-        return [
-            {
-                'date': m['date'],
-                'time': m['time'][:5],
-                'fs_A': m.get('fs_A', ''),
-                'fs_B': m.get('fs_B', ''),
-            }
-            for m in played
-        ]
+        # Odota hetki lisää dataa varten
+        await page.wait_for_timeout(2000)
 
     except Exception as e:
-        print(f'  VIRHE {team_name}: {type(e).__name__}: {e}')
+        print(f'  VIRHE {team_name}: {type(e).__name__}: {str(e)[:100]}')
+    finally:
+        await page.close()
+
+    if not captured:
+        print(f'  {team_name}: ei API-vastausta kaapattu')
         return []
+
+    data = captured['data']
+    matches = data.get('matches', [])
+
+    # Debug ensimmäiselle joukkueelle
+    if team_id == '35186299':
+        statuses = list({m.get('status') for m in matches})
+        seasons = list({m.get('season_id') for m in matches})
+        print(f'  DEBUG {team_name}: {len(matches)} ottelua, statukset={statuses}, kaudet={seasons}')
+        if matches:
+            print(f'  DEBUG esimerkki: {json.dumps(matches[0])}')
+
+    played = [
+        m for m in matches
+        if m.get('fs_A', '') != '' and m.get('fs_B', '') != ''
+    ]
+    print(f'  {team_name}: {len(played)} tulosta')
+    return [
+        {
+            'date': m['date'],
+            'time': m['time'][:5],
+            'fs_A': m.get('fs_A', ''),
+            'fs_B': m.get('fs_B', ''),
+        }
+        for m in played
+    ]
 
 
 async def main():
@@ -83,17 +92,9 @@ async def main():
                 'Accept-Language': 'fi-FI,fi;q=0.9,en;q=0.8',
             }
         )
-        page = await context.new_page()
-
-        # KÃ¤ydÃ¤Ã¤n ensin palloliitossa jotta evÃ¤steet asettuvat
-        try:
-            await page.goto('https://tulospalvelu.palloliitto.fi/', timeout=20000, wait_until='domcontentloaded')
-            print('  Palloliitto-sivu ladattu (evÃ¤steet asetettu)')
-        except Exception as e:
-            print(f'  Huom: etusivu ei latautunut ({e}), jatketaan silti...')
 
         for team_id, team_name in TEAMS.items():
-            results[team_id] = await fetch_team(page, team_id, team_name)
+            results[team_id] = await fetch_team(context, team_id, team_name)
 
         await browser.close()
 
