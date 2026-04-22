@@ -1081,14 +1081,16 @@
         for (const card of document.querySelectorAll('.team-card[data-team-id]')) {
           const teamId = card.dataset.teamId;
           try {
-            const url = 'https://spl.torneopal.fi/taso/widget.php?teamid=' + teamId + '&widget=schedule&t=' + Date.now();
-            const resp = await fetch(url);
+            const resp = await fetch('https://spl.torneopal.fi/taso/widget.php?teamid=' + teamId + '&widget=schedule&t=' + Date.now());
             const txt = await resp.text();
-            const si = txt.indexOf('document.write(\"');
-            const ei = txt.lastIndexOf('\");');
+            const BSLASH = String.fromCharCode(92);
+            const startMark = 'document.write(' + BSLASH + '"';
+            const endMark = BSLASH + '");';
+            const si = txt.indexOf(startMark);
+            const ei = txt.lastIndexOf(endMark);
             if (si < 0 || ei < 0) continue;
-            var raw = txt.substring(si + 16, ei);
-            raw = raw.split('\\"').join('"').split('\\'').join('');
+            var raw = txt.substring(si + startMark.length, ei);
+            raw = raw.split(BSLASH + '"').join('"').split(BSLASH + '').join('');
             const tmp = document.createElement('div');
             tmp.innerHTML = raw;
             const resultMap = {};
