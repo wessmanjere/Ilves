@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves / P2017 – Piirisarjat Syksy 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260728T173000
+DTEND;TZID=Europe/Helsinki:20260728T192500
+SUMMARY:Ilves/P2017: PJK/valkoinen\, Ilves/2 keltainen +1
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves/P2017 - PJK/valkoinen\n18:05 Ilves/P2017 - Ilves/2 keltainen\n18:45 FC Haka j./Valkoinen - Ilves/P2017
+UID:20260728-Ilves_P2017-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260811T171500
+DTEND;TZID=Europe/Helsinki:20260811T190500
+SUMMARY:Ilves/P2017: IkU/Apassit YJ\, Ylöjärven Ilves +1
+LOCATION:Soppeenharju TN\, Ylöjärvi
+DESCRIPTION:17:15 IkU/Apassit YJ - Ilves/P2017\n17:50 Ilves/P2017 - Ylöjärven Ilves\n18:25 Ilves/2 - Ilves/P2017
+UID:20260811-Ilves_P2017-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260825T173000
+DTEND;TZID=Europe/Helsinki:20260825T200500
+SUMMARY:Ilves/P2017: FC Kangasala\, Ilves-Kissat jr Punainen +2
+LOCATION:Ahvenisjärvi 2 TN\, Tampere
+DESCRIPTION:17:30 Ilves/P2017 - FC Kangasala\n17:55 Ilves-Kissat jr Punainen - Ilves/P2017\n19:00 Ylöjärven Ilves Punainen - Ilves/P2017\n19:25 Ilves/P2017 - TPV Punainen
+UID:20260825-Ilves_P2017-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260908T173000
+DTEND;TZID=Europe/Helsinki:20260908T192500
+SUMMARY:Ilves/P2017: Akaa YJ\, Ilves/2 vihreä +1
+LOCATION:TP-49 Areena\, Toijala
+DESCRIPTION:17:30 Akaa YJ - Ilves/P2017\n18:05 Ilves/2 vihreä - Ilves/P2017\n18:45 Ilves/P2017 - Tampere United
+UID:20260908-Ilves_P2017-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260921T173000
+DTEND;TZID=Europe/Helsinki:20260921T192500
+SUMMARY:Ilves/P2017: HJS/Valkosininen\, Ilves/2 keltavihreä +1
+LOCATION:Pulleri 7 N\, Hämeenlinna
+DESCRIPTION:17:30 HJS/Valkosininen - Ilves/P2017\n18:05 Ilves/2 keltavihreä - Ilves/P2017\n18:45 Ilves/P2017 - PJK
+UID:20260921-Ilves_P2017-syksy@ilves-p2017
+END:VEVENT
+END:VCALENDAR
