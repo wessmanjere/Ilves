@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Keltavihreä B – Piirisarjat Syksy 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260724T174500
+DTEND;TZID=Europe/Helsinki:20260724T202000
+SUMMARY:Ilves/Keltavihreä B: Ilves Keltainen B\, Ylöjärven Ilves/sininen +2
+LOCATION:Keskuskenttä TN\, Pirkkala
+DESCRIPTION:17:45 Ilves Keltainen B - Ilves/Keltavihreä B\n18:35 Ilves/Keltavihreä B - Ylöjärven Ilves/sininen\n19:15 Ilves/Keltavihreä B - PJK/sininen\n19:40 FC Kangasala - Ilves/Keltavihreä B
+UID:20260724-Ilves_Keltavihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260803T173000
+DTEND;TZID=Europe/Helsinki:20260803T192500
+SUMMARY:Ilves/Keltavihreä B: Ilves Keltainen A\, Ilves-Kissat jr Valkoinen +1
+LOCATION:Ahvenisjärvi 2 TN\, Tampere
+DESCRIPTION:17:30 Ilves/Keltavihreä B - Ilves Keltainen A\n18:05 Ilves-Kissat jr Valkoinen - Ilves/Keltavihreä B\n18:45 Ilves/Keltavihreä B - Pyry Punainen
+UID:20260803-Ilves_Keltavihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260817T173000
+DTEND;TZID=Europe/Helsinki:20260817T200500
+SUMMARY:Ilves/Keltavihreä B: Ilves Vihreä B\, Ylöjärven Ilves +2
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä B - Ilves/Keltavihreä B\n18:20 Ilves/Keltavihreä B - Ylöjärven Ilves\n19:00 Ilves/Keltavihreä B - Tampere United Oranssi\n19:25 HJS/sinivalkoinen - Ilves/Keltavihreä B
+UID:20260817-Ilves_Keltavihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260831T173000
+DTEND;TZID=Europe/Helsinki:20260831T192500
+SUMMARY:Ilves/Keltavihreä B: Ilves Vihreä A\, FC Haka j./Valkoinen +1
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä A - Ilves/Keltavihreä B\n18:05 FC Haka j./Valkoinen - Ilves/Keltavihreä B\n18:45 Ilves/Keltavihreä B - TPV/Punainen
+UID:20260831-Ilves_Keltavihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260915T173000
+DTEND;TZID=Europe/Helsinki:20260915T192500
+SUMMARY:Ilves/Keltavihreä B: HJS/Valkosininen\, Ilves Keltainen C +1
+LOCATION:Ahvenisjärvi 2 TN\, Tampere
+DESCRIPTION:17:30 HJS/Valkosininen - Ilves/Keltavihreä B\n18:05 Ilves Keltainen C - Ilves/Keltavihreä B\n18:45 Ilves/Keltavihreä B - NoPS
+UID:20260915-Ilves_Keltavihreä_B-syksy@ilves-p2017
+END:VEVENT
+END:VCALENDAR
