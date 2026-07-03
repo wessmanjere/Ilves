@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Keltainen C – Piirisarjat Syksy 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260720T173000
+DTEND;TZID=Europe/Helsinki:20260720T192500
+SUMMARY:Ilves Keltainen C: Ilves/P2018/A\, Ilves-Kissat jr Valkoinen +1
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Keltainen C - Ilves/P2018/A\n18:05 Ilves-Kissat jr Valkoinen - Ilves Keltainen C\n18:45 Ilves Keltainen C - HJS/sinivalkoinen
+UID:20260720-Ilves_Keltainen_C-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260806T173000
+DTEND;TZID=Europe/Helsinki:20260806T200500
+SUMMARY:Ilves Keltainen C: Ilves/P2018/B\, Ylöjärven Ilves +2
+LOCATION:Soppeenharju TN\, Ylöjärvi
+DESCRIPTION:17:30 Ilves Keltainen C - Ilves/P2018/B\n17:55 Ilves Keltainen C - Ylöjärven Ilves\n18:20 FC Kangasala - Ilves Keltainen C\n19:25 TPV/Punainen - Ilves Keltainen C
+UID:20260806-Ilves_Keltainen_C-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260819T173000
+DTEND;TZID=Europe/Helsinki:20260819T192500
+SUMMARY:Ilves Keltainen C: PJK/sininen\, LeKi-futis/sininen +1
+LOCATION:Sahara TN\, Valkeakoski
+DESCRIPTION:17:30 Ilves Keltainen C - PJK/sininen\n18:05 Ilves Keltainen C - LeKi-futis/sininen\n18:45 FC Haka j./Valkoinen - Ilves Keltainen C
+UID:20260819-Ilves_Keltainen_C-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260831T172000
+DTEND;TZID=Europe/Helsinki:20260831T195000
+SUMMARY:Ilves Keltainen C: Ilves/Keltavihreä A\, Ylöjärven Ilves/sininen +2
+LOCATION:Ylöjärven Ilves Areena TN\, Ylöjärvi
+DESCRIPTION:17:20 Ilves Keltainen C - Ilves/Keltavihreä A\n17:45 Ilves Keltainen C - Ylöjärven Ilves/sininen\n18:10 Pyry Punainen - Ilves Keltainen C\n19:10 Tampere United Oranssi - Ilves Keltainen C
+UID:20260831-Ilves_Keltainen_C-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260915T173000
+DTEND;TZID=Europe/Helsinki:20260915T192500
+SUMMARY:Ilves Keltainen C: NoPS\, Ilves/Keltavihreä B +1
+LOCATION:Ahvenisjärvi 2 TN\, Tampere
+DESCRIPTION:17:30 Ilves Keltainen C - NoPS\n18:05 Ilves Keltainen C - Ilves/Keltavihreä B\n18:45 HJS/Valkosininen - Ilves Keltainen C
+UID:20260915-Ilves_Keltainen_C-syksy@ilves-p2017
+END:VEVENT
+END:VCALENDAR
