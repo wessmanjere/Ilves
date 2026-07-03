@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves / P2017 Keltainen – Piirisarjat Syksy 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260730T173000
+DTEND;TZID=Europe/Helsinki:20260730T200500
+SUMMARY:Ilves/P2017 Keltainen: Ilves/2\, TPV Punainen +2
+LOCATION:Killo N\, Nokia
+DESCRIPTION:17:30 Ilves/2 - Ilves/P2017 Keltainen\n18:20 Ilves/P2017 Keltainen - TPV Punainen\n19:00 Ilves/P2017 Keltainen - PJK\n19:25 Akaa YJ - Ilves/P2017 Keltainen
+UID:20260730-Ilves_P2017_Keltainen-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260810T173000
+DTEND;TZID=Europe/Helsinki:20260810T192500
+SUMMARY:Ilves/P2017 Keltainen: HJS/Valkosininen\, Ilves-Kissat jr Punainen +1
+LOCATION:Pulleri 7 N\, Hämeenlinna
+DESCRIPTION:17:30 HJS/Valkosininen - Ilves/P2017 Keltainen\n18:05 Ilves-Kissat jr Punainen - Ilves/P2017 Keltainen\n18:45 Ilves/P2017 Keltainen - PJK/valkoinen
+UID:20260810-Ilves_P2017_Keltainen-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260826T173000
+DTEND;TZID=Europe/Helsinki:20260826T192500
+SUMMARY:Ilves/P2017 Keltainen: FC Haka j./Valkoinen\, Ilves/2 vihreä +1
+LOCATION:Sahara TN\, Valkeakoski
+DESCRIPTION:17:30 FC Haka j./Valkoinen - Ilves/P2017 Keltainen\n18:05 Ilves/2 vihreä - Ilves/P2017 Keltainen\n18:45 Ilves/P2017 Keltainen - Ylöjärven Ilves
+UID:20260826-Ilves_P2017_Keltainen-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260908T173000
+DTEND;TZID=Europe/Helsinki:20260908T192500
+SUMMARY:Ilves/P2017 Keltainen: IkU/Apassit YJ\, Ilves/2 keltavihreä +1
+LOCATION:Ahvenisjärvi 2 TN\, Tampere
+DESCRIPTION:17:30 Ilves/P2017 Keltainen - IkU/Apassit YJ\n18:05 Ilves/2 keltavihreä - Ilves/P2017 Keltainen\n18:45 Ylöjärven Ilves Punainen - Ilves/P2017 Keltainen
+UID:20260908-Ilves_P2017_Keltainen-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260922T173000
+DTEND;TZID=Europe/Helsinki:20260922T192500
+SUMMARY:Ilves/P2017 Keltainen: FC Kangasala\, Tampere United +1
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 FC Kangasala - Ilves/P2017 Keltainen\n18:05 Ilves/P2017 Keltainen - Tampere United\n18:45 Ilves/2 keltainen - Ilves/P2017 Keltainen
+UID:20260922-Ilves_P2017_Keltainen-syksy@ilves-p2017
+END:VEVENT
+END:VCALENDAR
