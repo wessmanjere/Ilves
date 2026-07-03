@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Vihreä A – Piirisarjat Syksy 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260721T173000
+DTEND;TZID=Europe/Helsinki:20260721T192500
+SUMMARY:Ilves Vihreä A: HJS/Valkosininen\, Tampere United Oranssi +1
+LOCATION:Pulleri 7 N\, Hämeenlinna
+DESCRIPTION:17:30 HJS/Valkosininen - Ilves Vihreä A\n18:05 Tampere United Oranssi - Ilves Vihreä A\n18:45 Ilves Vihreä A - Ilves/P2018/B
+UID:20260721-Ilves_Vihreä_A-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260819T173000
+DTEND;TZID=Europe/Helsinki:20260819T192500
+SUMMARY:Ilves Vihreä A: Ilves-Kissat jr Valkoinen\, Ilves/Keltavihreä A +1
+LOCATION:Suorama N\, Kangasala
+DESCRIPTION:17:30 Ilves Vihreä A - Ilves-Kissat jr Valkoinen\n18:05 Ilves Vihreä A - Ilves/Keltavihreä A\n18:45 FC Kangasala - Ilves Vihreä A
+UID:20260819-Ilves_Vihreä_A-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260831T173000
+DTEND;TZID=Europe/Helsinki:20260831T192500
+SUMMARY:Ilves Vihreä A: Ilves/Keltavihreä B\, TPV/Punainen +1
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä A - Ilves/Keltavihreä B\n18:05 TPV/Punainen - Ilves Vihreä A\n18:45 Ilves Vihreä A - FC Haka j./Valkoinen
+UID:20260831-Ilves_Vihreä_A-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260914T173000
+DTEND;TZID=Europe/Helsinki:20260914T194000
+SUMMARY:Ilves Vihreä A: PJK/sininen\, Ilves/P2018/A +2
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä A - PJK/sininen\n17:55 Ilves Vihreä A - Ilves/P2018/A\n18:20 Pyry Punainen - Ilves Vihreä A\n19:00 Ylöjärven Ilves - Ilves Vihreä A
+UID:20260914-Ilves_Vihreä_A-syksy@ilves-p2017
+END:VEVENT
+END:VCALENDAR
