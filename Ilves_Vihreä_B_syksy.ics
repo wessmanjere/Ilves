@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ilves P2017//Piirisarjat 2026//FI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Ilves Vihreä B – Piirisarjat Syksy 2026
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260720T173000
+DTEND;TZID=Europe/Helsinki:20260720T192500
+SUMMARY:Ilves Vihreä B: LeKi-futis/sininen\, TPV/Punainen +1
+LOCATION:Ahvenisjärvi 2 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä B - LeKi-futis/sininen\n18:05 TPV/Punainen - Ilves Vihreä B\n18:45 Ilves Vihreä B - Pyry Punainen
+UID:20260720-Ilves_Vihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260803T173000
+DTEND;TZID=Europe/Helsinki:20260803T192500
+SUMMARY:Ilves Vihreä B: Ilves/Keltavihreä A\, HJS/Valkosininen +1
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves/Keltavihreä A - Ilves Vihreä B\n18:05 HJS/Valkosininen - Ilves Vihreä B\n18:45 Ilves Vihreä B - PJK/sininen
+UID:20260803-Ilves_Vihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260817T173000
+DTEND;TZID=Europe/Helsinki:20260817T194000
+SUMMARY:Ilves Vihreä B: Ilves/Keltavihreä B\, Tampere United Oranssi +2
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä B - Ilves/Keltavihreä B\n17:55 Ilves Vihreä B - Tampere United Oranssi\n18:20 HJS/sinivalkoinen - Ilves Vihreä B\n19:00 Ylöjärven Ilves - Ilves Vihreä B
+UID:20260817-Ilves_Vihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260831T183500
+DTEND;TZID=Europe/Helsinki:20260831T203000
+SUMMARY:Ilves Vihreä B: Ilves/P2018/A\, NoPS +1
+LOCATION:Harjuniitty TN\, Nokia
+DESCRIPTION:18:35 Ilves/P2018/A - Ilves Vihreä B\n19:10 Ilves Vihreä B - NoPS\n19:50 FC Kangasala - Ilves Vihreä B
+UID:20260831-Ilves_Vihreä_B-syksy@ilves-p2017
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Helsinki:20260914T173000
+DTEND;TZID=Europe/Helsinki:20260914T194000
+SUMMARY:Ilves Vihreä B: Ilves-Kissat jr Valkoinen\, Ilves/P2018/B +2
+LOCATION:Ahvenisjärvi 1 TN\, Tampere
+DESCRIPTION:17:30 Ilves Vihreä B - Ilves-Kissat jr Valkoinen\n17:55 Ilves Vihreä B - Ilves/P2018/B\n18:20 FC Haka j./Valkoinen - Ilves Vihreä B\n19:00 Ylöjärven Ilves/sininen - Ilves Vihreä B
+UID:20260914-Ilves_Vihreä_B-syksy@ilves-p2017
+END:VEVENT
+END:VCALENDAR
