@@ -1,11 +1,12 @@
 """
 Hakee Ilves P2017-joukkueiden ottelutulokset Palloliiton tulospalvelusta.
-Navigoi oikealle tiimisivulle ja kaappaa verkkoliikenne.
+Kutsuu suoraan Torneopalin REST-rajapintaa (ei selainta, ei Playwrightia).
+Vaatii Accept-otsakkeen, joka toimii rajapinnan julkisena avaimena.
 """
 import json
-import asyncio
+import urllib.request
+import urllib.error
 from datetime import datetime, timezone
-from playwright.async_api import async_playwright
 
 TEAMS = {
     '35186280': 'Ilves / P2017',
@@ -18,85 +19,52 @@ TEAMS = {
     '35186298': 'Ilves Vihreä B',
 }
 
-TEAM_PAGE = 'https://tulospalvelu.palloliitto.fi/team/{}/matches'
 API_URL = 'https://spl.torneopal.net/taso/rest/getMatches?team_id={}'
+ACCEPT = 'json/n9tnjq45uuccbe8nbfy6q7ggmreqntvs'
 
 
-async def fetch_team(context, team_id, team_name):
-    """Navigoi tiimisivulle ja kaappaa API-vastaus verkkoliikenteestä."""
-    page = await context.new_page()
-    captured = {}
-
-    async def handle_response(response):
-        url = response.url
-        if 'getMatches' in url and team_id in url:
-            try:
-                body = await response.json()
-                captured['data'] = body
-            except Exception:
-                pass
-
-    page.on('response', handle_response)
+def fetch_team(team_id, team_name):
+    """Hae yhden joukkueen ottelut ja palauta pelatut tulokset."""
+    url = API_URL.format(team_id)
+    req = urllib.request.Request(url, headers={
+        'Accept': ACCEPT,
+        'Accept-Language': 'fi-FI,fi;q=0.9,en;q=0.8',
+        'User-Agent': 'Mozilla/5.0 (Ilves-tulosbotti)',
+    })
 
     try:
-        url = TEAM_PAGE.format(team_id)
-        await page.goto(url, timeout=30000, wait_until='networkidle')
-
-        # Odota hetki lisää dataa varten
-        await page.wait_for_timeout(2000)
-
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+    except urllib.error.HTTPError as e:
+        print(f'  VIRHE {team_name}: HTTP {e.code}')
+        return []
     except Exception as e:
         print(f'  VIRHE {team_name}: {type(e).__name__}: {str(e)[:100]}')
-    finally:
-        await page.close()
-
-    if not captured:
-        print(f'  {team_name}: ei API-vastausta kaapattu')
         return []
 
-    data = captured['data']
     matches = data.get('matches', [])
 
-    # Debug ensimmäiselle joukkueelle
-    if team_id == '35186299':
-        statuses = list({m.get('status') for m in matches})
-        seasons = list({m.get('season_id') for m in matches})
-        print(f'  DEBUG {team_name}: {len(matches)} ottelua, statukset={statuses}, kaudet={seasons}')
-        if matches:
-            print(f'  DEBUG esimerkki: {json.dumps(matches[0])}')
+    played = []
+    for m in matches:
+        a = str(m.get('fs_A', '') or '').strip()
+        b = str(m.get('fs_B', '') or '').strip()
+        if a == '' or b == '':
+            continue
+        played.append({
+            'date': m.get('date', ''),
+            'time': (m.get('time', '') or '')[:5],
+            'fs_A': a,
+            'fs_B': b,
+        })
 
-    played = [
-        m for m in matches
-        if m.get('fs_A', '') != '' and m.get('fs_B', '') != ''
-    ]
-    print(f'  {team_name}: {len(played)} tulosta')
-    return [
-        {
-            'date': m['date'],
-            'time': m['time'][:5],
-            'fs_A': m.get('fs_A', ''),
-            'fs_B': m.get('fs_B', ''),
-        }
-        for m in played
-    ]
+    print(f'  {team_name}: {len(matches)} ottelua, {len(played)} tulosta')
+    return played
 
 
-async def main():
+def main():
     results = {}
-
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        context = await browser.new_context(
-            user_agent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            extra_http_headers={
-                'Accept-Language': 'fi-FI,fi;q=0.9,en;q=0.8',
-            }
-        )
-
-        for team_id, team_name in TEAMS.items():
-            results[team_id] = await fetch_team(context, team_id, team_name)
-
-        await browser.close()
+    for team_id, team_name in TEAMS.items():
+        results[team_id] = fetch_team(team_id, team_name)
 
     output = {
         'updated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
@@ -110,4 +78,5 @@ async def main():
     print(f'\nValmis! {total} tulosta tallennettu results.json-tiedostoon.')
 
 
-asyncio.run(main())
+if __name__ == '__main__':
+    main()
