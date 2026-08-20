@@ -1,37 +1,26 @@
 {
-  "updated": "2026-08-20T04:11:02Z",
+  "updated": "2026-08-20T04:12:59Z",
   "results": {},
-  "_probe": {
-    "1 .net accept-only": {
-      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
-      "http": 403,
-      "body_head": "<!doctype html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>"
-    },
-    "2 .net accept+ref+origin": {
-      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
-      "http": 401,
-      "body_head": "{\"call\":{\"status\":\"error\",\"error\":\"Invalid api_key5\",\"result_time\":0.086,\"time_stamp\":1787199060,\"xip\":\"127.0.1.1\",\"apilevel\":1}}"
-    },
-    "3 .fi accept+ref+origin": {
-      "url": "https://spl.torneopal.fi/taso/rest/getMatches?team_id=35186299",
-      "http": 401,
-      "body_head": "{\"call\":{\"status\":\"error\",\"error\":\"Invalid api_key5\",\"result_time\":0.076,\"time_stamp\":1787199061,\"xip\":\"127.0.1.1\",\"apilevel\":1}}"
-    },
-    "4 palloliitto same-origin": {
-      "url": "https://tulospalvelu.palloliitto.fi/taso/rest/getMatches?team_id=35186299",
-      "http": 200,
-      "body_head": "<!DOCTYPE html>\n<html lang=\"fi\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width",
-      "json": "not json: Expecting value: line 1 column 1 (char 0)"
-    },
-    "5 .net accept-json std": {
-      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
-      "http": 403,
-      "body_head": "<!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>"
-    },
-    "6 .net +xrw": {
-      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
-      "http": 401,
-      "body_head": "{\"call\":{\"status\":\"error\",\"error\":\"Invalid api_key5\",\"result_time\":0.086,\"time_stamp\":1787199060,\"xip\":\"127.0.1.1\",\"apilevel\":1}}"
-    }
+  "_probe2": {
+    "root_http": 200,
+    "root_api_key_hits": [],
+    "root_json_slash": [],
+    "script_count": 3,
+    "scripts": [
+      "https://plausible.torneopal.fi/js/script.js",
+      "https://tulospalvelu.palloliitto.fi/assets/index-CGHlNQcL.js",
+      "https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496"
+    ],
+    "checked": [
+      "https://plausible.torneopal.fi/js/script.js (1386b)",
+      "https://tulospalvelu.palloliitto.fi/assets/index-CGHlNQcL.js (1964603b)",
+      "https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 (31612b)"
+    ],
+    "api_keys_found": [
+      "4h7dznqdxwtp3hsfdyf5r793uahfxy7x"
+    ],
+    "json_slash_found": [
+      "df8e84j9xtdz269euy3h"
+    ]
   }
 }
