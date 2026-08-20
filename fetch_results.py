@@ -1,41 +1,80 @@
-import json, urllib.request, urllib.error
+"""
+Hakee Ilves P2017 -joukkueiden ottelutulokset Palloliiton tulospalvelusta
+(Torneopal REST). Kutsuu rajapintaa suoraan oikealla api_keylla seka
+Referer/Origin-otsakkeilla, jotka Cloudflare vaatii. Ei selainta.
+"""
+import json
+import urllib.request
+import urllib.error
 from datetime import datetime, timezone
-TEAM='35186299'
-REF='https://tulospalvelu.palloliitto.fi/'; ORI='https://tulospalvelu.palloliitto.fi'
-UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36'
-K1='df8e84j9xtdz269euy3h'; K2='4h7dznqdxwtp3hsfdyf5r793uahfxy7x'
-base='https://spl.torneopal.net/taso/rest/getMatches?team_id={}'
-def h(accept): return {'Accept':accept,'Referer':REF,'Origin':ORI,'User-Agent':UA}
-variants=[
- ('A accept json/K1', base.format(TEAM), h('json/'+K1)),
- ('B accept json/K2', base.format(TEAM), h('json/'+K2)),
- ('C qs api_key=K1', base.format(TEAM)+'&api_key='+K1, h('json')),
- ('D qs api_key=K2', base.format(TEAM)+'&api_key='+K2, h('json')),
-]
-out={}
-for name,url,headers in variants:
-    rec={}
+
+TEAMS = {
+    '35186280': 'Ilves / P2017',
+    '35186299': 'Ilves Keltainen A',
+    '35186284': 'Ilves Keltainen B',
+    '35186295': 'Ilves Keltainen C',
+    '35213619': 'Ilves / Keltavihrea A',
+    '35213621': 'Ilves / Keltavihrea B',
+    '35186300': 'Ilves Vihrea A',
+    '35186298': 'Ilves Vihrea B',
+}
+
+API_URL = 'https://spl.torneopal.net/taso/rest/getMatches?team_id={}'
+HEADERS = {
+    'Accept': 'json/4h7dznqdxwtp3hsfdyf5r793uahfxy7x',
+    'Referer': 'https://tulospalvelu.palloliitto.fi/',
+    'Origin': 'https://tulospalvelu.palloliitto.fi',
+    'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                   '(KHTML, like Gecko) Chrome/120 Safari/537.36'),
+}
+
+
+def fetch_team(team_id, team_name):
+    url = API_URL.format(team_id)
+    req = urllib.request.Request(url, headers=HEADERS)
     try:
-        req=urllib.request.Request(url,headers=headers)
-        with urllib.request.urlopen(req,timeout=30) as r:
-            body=r.read().decode('utf-8','replace'); rec['http']=r.status
-            try:
-                d=json.loads(body); m=d.get('matches',[])
-                rec['match_count']=len(m)
-                played=[x for x in m if str(x.get('fs_A','') or '').strip()!='' and str(x.get('fs_B','') or '').strip()!='']
-                rec['played_count']=len(played)
-                if m:
-                    ex=played[0] if played else m[0]
-                    rec['sample']={k:ex.get(k) for k in ('date','time','fs_A','fs_B','status','team_A_name','team_B_name','category_name','competition_name')}
-            except Exception as e:
-                rec['nonjson']=body[:150]
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
     except urllib.error.HTTPError as e:
-        rec['http']=e.code
-        try: rec['err_body']=e.read().decode('utf-8','replace')[:150]
-        except Exception: pass
+        print(f'  VIRHE {team_name}: HTTP {e.code}')
+        return []
     except Exception as e:
-        rec['error']=type(e).__name__+': '+str(e)[:120]
-    out[name]=rec
-with open('results.json','w',encoding='utf-8') as f:
-    json.dump({'updated':datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),'results':{},'_probe3':out},f,ensure_ascii=False,indent=2)
-print('probe3 done')
+        print(f'  VIRHE {team_name}: {type(e).__name__}: {str(e)[:100]}')
+        return []
+
+    matches = data.get('matches', [])
+    played = []
+    for m in matches:
+        a = str(m.get('fs_A', '') or '').strip()
+        b = str(m.get('fs_B', '') or '').strip()
+        if a == '' or b == '':
+            continue
+        played.append({
+            'date': m.get('date', ''),
+            'time': (m.get('time', '') or '')[:5],
+            'fs_A': a,
+            'fs_B': b,
+        })
+
+    print(f'  {team_name}: {len(matches)} ottelua, {len(played)} tulosta')
+    return played
+
+
+def main():
+    results = {}
+    for team_id, team_name in TEAMS.items():
+        results[team_id] = fetch_team(team_id, team_name)
+
+    output = {
+        'updated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+        'results': results,
+    }
+    with open('results.json', 'w', encoding='utf-8') as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    total = sum(len(v) for v in results.values())
+    print(f'\nValmis! {total} tulosta tallennettu.')
+
+
+if __name__ == '__main__':
+    main()
