@@ -1,26 +1,37 @@
 {
-  "updated": "2026-08-20T04:09:03Z",
-  "results": {
-    "35186280": [],
-    "35186299": [],
-    "35186284": [],
-    "35186295": [],
-    "35213619": [],
-    "35213621": [],
-    "35186300": [],
-    "35186298": []
-  },
-  "_debug": {
-    "per_team": {
-      "35186280": "HTTP 403: ",
-      "35186299": "HTTP 403: ",
-      "35186284": "HTTP 403: ",
-      "35186295": "HTTP 403: ",
-      "35213619": "HTTP 403: ",
-      "35213621": "HTTP 403: ",
-      "35186300": "HTTP 403: ",
-      "35186298": "HTTP 403: "
+  "updated": "2026-08-20T04:11:02Z",
+  "results": {},
+  "_probe": {
+    "1 .net accept-only": {
+      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
+      "http": 403,
+      "body_head": "<!doctype html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>"
     },
-    "sample": null
+    "2 .net accept+ref+origin": {
+      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
+      "http": 401,
+      "body_head": "{\"call\":{\"status\":\"error\",\"error\":\"Invalid api_key5\",\"result_time\":0.086,\"time_stamp\":1787199060,\"xip\":\"127.0.1.1\",\"apilevel\":1}}"
+    },
+    "3 .fi accept+ref+origin": {
+      "url": "https://spl.torneopal.fi/taso/rest/getMatches?team_id=35186299",
+      "http": 401,
+      "body_head": "{\"call\":{\"status\":\"error\",\"error\":\"Invalid api_key5\",\"result_time\":0.076,\"time_stamp\":1787199061,\"xip\":\"127.0.1.1\",\"apilevel\":1}}"
+    },
+    "4 palloliitto same-origin": {
+      "url": "https://tulospalvelu.palloliitto.fi/taso/rest/getMatches?team_id=35186299",
+      "http": 200,
+      "body_head": "<!DOCTYPE html>\n<html lang=\"fi\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width",
+      "json": "not json: Expecting value: line 1 column 1 (char 0)"
+    },
+    "5 .net accept-json std": {
+      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
+      "http": 403,
+      "body_head": "<!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>"
+    },
+    "6 .net +xrw": {
+      "url": "https://spl.torneopal.net/taso/rest/getMatches?team_id=35186299",
+      "http": 401,
+      "body_head": "{\"call\":{\"status\":\"error\",\"error\":\"Invalid api_key5\",\"result_time\":0.086,\"time_stamp\":1787199060,\"xip\":\"127.0.1.1\",\"apilevel\":1}}"
+    }
   }
 }
